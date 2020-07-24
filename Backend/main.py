@@ -3,11 +3,12 @@ import DataBase as db
 import tlg
 import datetime
 import requests
+import passwords
 
 app          = Flask(__name__)
 database     = r'D:\ac\Instrumentation\Final Ptoject\Backend\Main.db'
 conn         = db.create_connection(database)
-mainPassword = "dorosteaghaye"
+mainPassword = password.mainPassword
 db.create_table(conn)
 
 #------------------------------ESP requests------------------------------#
