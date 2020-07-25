@@ -5,7 +5,8 @@ import requests
 import passwords
 
 app          = Flask(__name__)
-database     = r'D:\ac\Instrumentation\Final Ptoject\Backend\Main.db'
+#database     = r'D:\ac\Instrumentation\Final Ptoject\Backend\Main.db'
+database     = r'C:\Users\Administrator\Desktop\instrumentation-final-project\Backend\Main.db'
 conn         = db.create_connection(database)
 mainPassword = passwords.mainPassword
 db.create_table(conn)
@@ -125,5 +126,5 @@ def getTime():
     return time, date
 
 if __name__ == '__main__':
-    app.run()
-    #app.run(host='176.9.199.181')
+    #app.run()
+    app.run(host='176.9.199.181')
