@@ -67,6 +67,18 @@ def query_all_users(conn):
     except Error as e:
         print(e)
         return 0
+def query_all_parkings(conn):
+    try:
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM parkings')
+        link_id = cur.fetchall()
+        if link_id==[]:
+            return 0
+        else:
+            return link_id
+    except Error as e:
+        print(e)
+        return 0
 def update_user(conn, user_name, password_hashed=None, name=None, parking_number=None, isClosed=None,  credit=None):
     if password_hashed is not None:
         try:
