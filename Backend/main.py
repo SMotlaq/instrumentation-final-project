@@ -7,23 +7,43 @@ import passwords
 app          = Flask(__name__)
 database     = r'D:\ac\Instrumentation\Final Ptoject\Backend\Main.db'
 conn         = db.create_connection(database)
-mainPassword = password.mainPassword
+mainPassword = passwords.mainPassword
 db.create_table(conn)
 
 #------------------------------ ESP requests ------------------------------#
+@app.route('/test', methods = ['GET'])
+def test():
+    return 'ok'
+
 @app.route('/get_status', methods = ['GET'])
 def get_status():
     password = request.args.get('password')
+    response = ''
     if password==mainPassword:
-        return None
+        with conn:
+            users = db.query_all_users(conn)
+        for user in users:
+            if user[5]=='1':
+                response = response + user[4]
+        return response
     else:
         return 'wrong password'
 
 @app.route('/set_status', methods = ['POST'])
+#state
+#10100001
 def set_status():
     password = request.args.get('password')
+    state    = request.args.get('state')
     if password==mainPassword:
-        return None
+        try:
+            for number in range(len(state)):
+                with conn:
+                    db.update_parkings(conn, number+1, state[number])
+            return 'ok'
+        except Exception as e:
+            print(e)
+            return e
     else:
         return 'wrong password'
 
@@ -31,18 +51,52 @@ def set_status():
 @app.route('/addUser', methods = ['POST'])
 #user_name, password_hashed, name
 def addUser():
-    password = request.args.get('password')
+    password        = request.args.get('password')
+    user_name       = request.args.get('user_name')
+    password_hashed = request.args.get('password_hashed')
+    name            = request.args.get('name')
     if password==mainPassword:
-        return None
+        try:
+            with conn:
+                print(user_name)
+                print(password_hashed)
+                print(name)
+                print(db.add_user(conn, user_name, password_hashed, name))
+            return 'ok'
+        except Exception as e:
+            print(e)
+            return str(e)
     else:
         return 'wrong password'
 
 @app.route('/parking_action', methods = ['POST'])
-# password, address, action
+# password, user, address, action, value
 def parking_action():
     password = request.args.get('password')
+    address  = request.args.get('address')
+    action   = request.args.get('action')
+    value    = request.args.get('value')
+    user     = request.args.get('user')
     if password==mainPassword:
-        return None
+        try:
+            if action=='reserve':
+                if value=='1':
+                    with conn:
+                        db.update_user(conn, user, parking_number = address)
+                elif value=='0':
+                    with conn:
+                        db.update_user(conn, user, parking_number = '0')
+            elif action=='control':
+                if value=='1':
+                    with conn:
+                        db.update_user(conn, user, isClosed = '1')
+                elif value=='0':
+                    with conn:
+                        db.update_user(conn, user, isClosed = '0')
+            return 'ok'
+        except Exception as e:
+            print(e)
+            return str(e)
     else:
         return 'wrong password'
 
@@ -71,4 +125,5 @@ def getTime():
     return time, date
 
 if __name__ == '__main__':
-    app.run()#host='178.63.211.120')
+    app.run()
+    #app.run(host='176.9.199.181')

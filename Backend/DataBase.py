@@ -12,10 +12,11 @@ def create_table(conn):
     if conn is not None:
         sql = """ CREATE TABLE IF NOT EXISTS users (
                     id integer PRIMARY KEY AUTOINCREMENT,
-                    uwer_name text,
+                    user_name text,
                     password_hashed text,
                     name text,
                     parking_number text,
+                    isClosed text,
                     credit text
                   ); """
         try:
@@ -23,13 +24,22 @@ def create_table(conn):
             c.execute(sql)
         except Error as e:
             print(e)
+        sql = """ CREATE TABLE IF NOT EXISTS parkings (
+                    id integer PRIMARY KEY AUTOINCREMENT,
+                    isFull text
+                  ); """
+        try:
+            c = conn.cursor()
+            c.execute(sql)
+        except Error as e:
+            print(e)
 
-def add_user(conn, user_name, password_hashed, name, parking_number=None, credit='0'):
+def add_user(conn, user_name, password_hashed, name, parking_number='0', isClosed='0', credit='0'):
     try:
-        sql = ''' INSERT INTO users(user_name, password_hashed, name, parking_number, credit)
-                  VALUES(?,?,?,?,?) '''
+        sql = ''' INSERT INTO users(user_name, password_hashed, name, parking_number, isClosed, credit)
+                  VALUES(?,?,?,?,?,?) '''
         cur = conn.cursor()
-        cur.execute(sql, (user_name, password_hashed, name, parking_number, credit,))
+        cur.execute(sql, (user_name, password_hashed, name, parking_number, isClosed, credit,))
         return cur.lastrowid
     except Error as e:
         print(e)
@@ -45,7 +55,19 @@ def query_user(conn, user_name):
     except Error as e:
         print(e)
         return 0
-def update_user(conn, user_name, password_hashed=None, name=None, parking_number=None, credit=None):
+def query_all_users(conn):
+    try:
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM users')
+        link_id = cur.fetchall()
+        if link_id==[]:
+            return 0
+        else:
+            return link_id
+    except Error as e:
+        print(e)
+        return 0
+def update_user(conn, user_name, password_hashed=None, name=None, parking_number=None, isClosed=None,  credit=None):
     if password_hashed is not None:
         try:
             cur = conn.cursor()
@@ -67,6 +89,13 @@ def update_user(conn, user_name, password_hashed=None, name=None, parking_number
             conn.commit()
         except Error as e:
             print(e)
+    if isClosed is not None:
+        try:
+            cur = conn.cursor()
+            cur.execute('UPDATE users SET isClosed=? WHERE user_name=?', (isClosed, user_name,))
+            conn.commit()
+        except Error as e:
+            print(e)
     if credit is not None:
         try:
             cur = conn.cursor()
@@ -74,3 +103,10 @@ def update_user(conn, user_name, password_hashed=None, name=None, parking_number
             conn.commit()
         except Error as e:
             print(e)
+def update_parkings(conn, id, isFull):
+    try:
+        cur = conn.cursor()
+        cur.execute('UPDATE parkings SET isFull=? WHERE id=?', (isFull, id,))
+        conn.commit()
+    except Error as e:
+        print(e)
