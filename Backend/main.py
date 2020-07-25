@@ -49,6 +49,20 @@ def set_status():
         return 'wrong password'
 
 #----------------------------- Admin requests -----------------------------#
+@app.route('/get_status2', methods = ['GET'])
+def get_status2():
+    password = request.args.get('password')
+    response = ''
+    if password==mainPassword:
+        with conn:
+            parkings = db.query_all_parkings(conn)
+            if parkings!=0:
+                for parking in parkings:
+                    response = response + parking[1]
+        return response
+    else:
+        return 'wrong password'
+
 @app.route('/addUser', methods = ['POST'])
 #user_name, password_hashed, name
 def addUser():
