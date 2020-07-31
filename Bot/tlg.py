@@ -13,12 +13,12 @@ import os
 my_token = tokens.my_token
 
 # server
-database   = r'C:\Users\Administrator\Desktop\instrumentation-final-project\telegram.db'
+#database   = r'C:\Users\Administrator\Desktop\instrumentation-final-project\telegram.db'
 # local:
-#database   = r'D:\ac\Projects\Python\BOTS\Profile Checker\Main.db'
+database   = r'D:\ac\Instrumentation\Final Ptoject\Bot\telegram.db'
 
 
-log_chan   = -1001493734925
+#log_chan   = -1001493734925
 salman     = 95374546
 conn       = db.create_connection(database)
 bot        = telegram.Bot(token=my_token)
@@ -37,7 +37,18 @@ def FSM(bot, update):
         bot.send_message(chat_id = int(inCome_uid),text = ms.hit_start, reply_markup=reply_markup)
 def start(bot, update):
     inCome_uid, inCome_name, inCome_user_id = exctract_info(update.message.from_user)
-
+    with conn:
+        isThere = db.query_user(conn, inCome_uid)
+        if isThere==0:
+            db.add_user(conn, inCome_uid, inCome_name, inCome_user_id, state = 'not signed home')
+            if inCome_user_id=='None':
+                inCome_user_id = '[NO USER ID]'
+            else:
+                inCome_user_id = '@' + inCome_user_id
+            send_text(log_chan, ms.new_member_log + '\n' + inCome_user_id + '\n' + inCome_name)
+        else:
+            db.edit_user(conn, inCome_uid, name = inCome_name, user_id = inCome_user_id, state = 'signed home')
+    send_text(int(inCome_uid),ms.start,keyboard=bt.home)
 
 def exctract_info(chat_id):
     inCome_uid = str(chat_id['id'])
@@ -89,6 +100,5 @@ send_text(salman, 'Bot started')
 while True:
     clear = lambda: os.system('cls')
     clear()
-    with conn:
     print('\n-- DONE --')
     time.sleep(2)
