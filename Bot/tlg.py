@@ -13,9 +13,9 @@ import os
 my_token = tokens.my_token
 
 # server
-#database   = r'C:\Users\Administrator\Desktop\instrumentation-final-project\telegram.db'
+database   = r'C:\Users\Administrator\Desktop\instrumentation-final-project\telegram.db'
 # local:
-database   = r'D:\ac\Instrumentation\Final Ptoject\Bot\telegram.db'
+#database   = r'D:\ac\Instrumentation\Final Ptoject\Bot\telegram.db'
 
 
 #log_chan   = -1001493734925
