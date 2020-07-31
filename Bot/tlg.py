@@ -46,9 +46,10 @@ def start(bot, update):
             else:
                 inCome_user_id = '@' + inCome_user_id
             send_text(log_chan, ms.new_member_log + '\n' + inCome_user_id + '\n' + inCome_name)
+            send_text(int(inCome_uid),ms.start,keyboard=bt.home_not_signed)
         else:
             db.edit_user(conn, inCome_uid, name = inCome_name, user_id = inCome_user_id, state = 'signed home')
-    send_text(int(inCome_uid),ms.start,keyboard=bt.home)
+            send_text(int(inCome_uid),ms.start,keyboard=bt.home_not_signed)
 
 def exctract_info(chat_id):
     inCome_uid = str(chat_id['id'])
