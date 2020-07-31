@@ -16,7 +16,7 @@ db.create_table(conn)
 def test():
     return 'ok'
 
-@app.route('/get_status', methods = ['GET'])
+@app.route('/get_status')
 def get_status():
     password = request.args.get('password')
     response = ''
@@ -30,7 +30,7 @@ def get_status():
     else:
         return 'wrong password'
 
-@app.route('/set_status', methods = ['POST'])
+@app.route('/set_status')
 #state
 #10100001
 def set_status():
