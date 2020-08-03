@@ -1,10 +1,14 @@
 from flask import Flask, request
+from flask_cors import CORS, cross_origin
 import DataBase as db
 import datetime
 import requests
 import passwords
 
-app          = Flask(__name__)
+app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 #database     = r'D:\ac\Instrumentation\Final Ptoject\Backend\Main.db'
 database     = r'C:\Users\Administrator\Desktop\instrumentation-final-project\Backend\Main.db'
 conn         = db.create_connection(database)
