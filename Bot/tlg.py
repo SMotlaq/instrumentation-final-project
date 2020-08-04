@@ -13,12 +13,12 @@ import os
 my_token = tokens.my_token
 
 # server
-database   = r'C:\Users\Administrator\Desktop\instrumentation-final-project\telegram.db'
+database   = r'C:\Users\Administrator\Desktop\instrumentation-final-project\Bot\telegram.db'
 # local:
 #database   = r'D:\ac\Instrumentation\Final Ptoject\Bot\telegram.db'
 
 
-#log_chan   = -1001493734925
+log_chan   = -1001119482996
 salman     = 95374546
 conn       = db.create_connection(database)
 bot        = telegram.Bot(token=my_token)
@@ -28,10 +28,74 @@ db.create_table(conn)
 def FSM(bot, update):
     inCome_uid, inCome_name, inCome_user_id = exctract_info(update.message.from_user)
     input_message = update.message.text
+    current_state = ''
     with conn:
         query_result = db.query_user(conn, inCome_uid)
     if query_result!=0 and query_result!='Fail':
-        pass
+        current_state = query_user[8]
+        if current_state == 'not signed home':
+            if input_message == bt.home_not_signed[0][0]:   # vorood
+                pass
+            elif input_message == bt.home_not_signed[0][1]:  # sabte nam
+                pass
+            else:
+                pass
+        elif current_state== 'signed home':
+            if input_message == bt.home_signed[0][0]:       # khorooj
+                pass
+            elif input_message == bt.home_signed[0][1]:     # reserve
+                pass
+            elif input_message == bt.home_signed[0][2]:     # ghofl
+                pass
+            else:
+                pass
+        elif current_state == 'enter username sign in':
+            if input_message == bt.back[0][0]:              # back
+                pass
+            else:
+                pass
+        elif current_state == 'enter password sign in':
+            if input_message == bt.back[0][0]:              # back
+                pass
+            else:
+                pass
+        elif current_state == 'enter username sign up':
+            if input_message == bt.back[0][0]:              # back
+                pass
+            else:
+                pass
+        elif current_state == 'enter password sign up':
+            if input_message == bt.back[0][0]:              # back
+                pass
+            else:
+                pass
+        elif current_state == 'lock':
+            if input_message == bt.lock[1][0]:              # back
+                pass
+            elif input_message == bt.lock[0][0]:            # close
+                pass
+            elif input_message == bt.lock[0][1]:            # open
+                pass
+            else:
+                pass
+        elif current_state == 'reserve':
+            if input_message == bt.reserve[1][0]:           # back
+                pass
+            elif input_message == bt.reserve[0][0]:         # parking 1
+                pass
+            elif input_message == bt.reserve[0][1]:         # parking 2
+                pass
+            else:
+                pass
+        elif current_state == 'reserve action':
+            if input_message == bt.reserve_action[1][0]:    # back
+                pass
+            elif input_message == bt.reserve_action[0][0]:  # cancel
+                pass
+            elif input_message == bt.reserve_action[0][1]:  # reserve kon
+                pass
+            else:
+                pass
     else:
         reply_markup = telegram.ReplyKeyboardRemove()
         bot.send_message(chat_id = int(inCome_uid),text = ms.hit_start, reply_markup=reply_markup)
@@ -102,4 +166,4 @@ while True:
     clear = lambda: os.system('cls')
     clear()
     print('\n-- DONE --')
-    time.sleep(2)
+    time.sleep(5)
