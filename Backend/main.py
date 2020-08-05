@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, abort
 from flask_cors import CORS, cross_origin
 import DataBase as db
 import datetime
@@ -18,7 +18,7 @@ db.create_table(conn)
 #------------------------------ ESP requests ------------------------------#
 @app.route('/test', methods = ['GET'])
 def test():
-    return 'ok'
+    abort(403)
 
 @app.route('/get_status')
 def get_status():
@@ -76,6 +76,21 @@ def get_status2():
         return response
     else:
         return 'wrong password'
+
+@app.route('/login', methods = ['POST'])
+def login():
+    password        = request.args.get('password')
+    user_name       = request.args.get('user_name')
+    password_hashed = request.args.get('password_hashed')
+
+    with conn:
+        user = db.query_user(conn, user_name)
+
+    if user[2]==password_hashed:
+        return 'ok'
+    else:
+        abort(403)
+
 
 @app.route('/addUser', methods = ['POST'])
 #user_name, password_hashed, name
