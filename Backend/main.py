@@ -19,6 +19,7 @@ db.create_table(conn)
 @app.route('/test', methods = ['GET'])
 def test():
     abort(403)
+    return 'salam'
 
 @app.route('/get_status')
 def get_status():
