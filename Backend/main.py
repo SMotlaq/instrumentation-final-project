@@ -4,6 +4,7 @@ import DataBase as db
 import datetime
 import requests
 import passwords
+import os
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -17,13 +18,14 @@ mainPassword = passwords.mainPassword
 db.create_table(conn)
 
 #----------------------------- REACT requests -----------------------------#
-@app.route('/')
-@app.route('/login')
-@app.route('/signup')
-@app.route('/reserve')
+@app.route('/front', defaults={'path': ''})
+@app.route('/front/<path:path>')
 def react():
-    return send_from_directory(index, 'index.html')
-
+     path_dir = index #path react build
+     if path != "" and os.path.exists(os.path.join(path_dir, path)):
+         return send_from_directory(os.path.join(path_dir), path)
+     else:
+         return send_from_directory(os.path.join(path_dir),'index.html')
 
 #------------------------------ ESP requests ------------------------------#
 @app.route('/test', methods = ['GET'])
