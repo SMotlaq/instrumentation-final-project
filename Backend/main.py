@@ -130,7 +130,6 @@ def parking_action():
                 elif value=='0':
                     with conn:
                         user = db.query_user(conn, user)
-                        print('user = ' + user[4] + '\n' + 'req = ' + '\n' + address)
                         if user[4]==address:
                             db.update_user(conn, user, parking_number = '0')
                             return 'ok'
@@ -150,6 +149,10 @@ def parking_action():
             return str(e)
     else:
         return 'wrong password'
+
+@app.errorhandler(403)
+def payme(e):
+    return "You can't do it"
 
 def cleaner(time, date):
     time_elements = time.split(':')
