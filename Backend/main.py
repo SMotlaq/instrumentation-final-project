@@ -121,38 +121,31 @@ def parking_action():
     value    = request.args.get('value')
     user     = request.args.get('user')
     if password==mainPassword:
-        try:
-            if action=='reserve':
-                if value=='1':
-                    with conn:
-                        db.update_user(conn, user, parking_number = address)
+        if action=='reserve':
+            if value=='1':
+                with conn:
+                    db.update_user(conn, user, parking_number = address)
+                    return 'ok'
+            elif value=='0':
+                with conn:
+                    user = db.query_user(conn, user)
+                    if user[4]==address:
+                        db.update_user(conn, user, parking_number = '0')
                         return 'ok'
-                elif value=='0':
-                    with conn:
-                        user = db.query_user(conn, user)
-                        if user[4]==address:
-                            db.update_user(conn, user, parking_number = '0')
-                            return 'ok'
-                        else:
-                            abort(403)
-            elif action=='control':
-                if value=='1':
-                    with conn:
-                        db.update_user(conn, user, isClosed = '1')
-                        return 'ok'
-                elif value=='0':
-                    with conn:
-                        db.update_user(conn, user, isClosed = '0')
-                        return 'ok'
-        except Exception as e:
-            print(e)
-            return str(e)
+                    else:
+                        abort(403)
+        elif action=='control':
+            if value=='1':
+                with conn:
+                    db.update_user(conn, user, isClosed = '1')
+                    return 'ok'
+            elif value=='0':
+                with conn:
+                    db.update_user(conn, user, isClosed = '0')
+                    return 'ok'
     else:
         return 'wrong password'
 
-@app.errorhandler(403)
-def payme(e):
-    return "You can't do it", 403
 
 def cleaner(time, date):
     time_elements = time.split(':')
