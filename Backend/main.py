@@ -67,7 +67,9 @@ def get_status2():
             users = db.query_all_users(conn)
             for user in users:
                 if user[4]!='0':
-                    response[int(user[4])-1]='2'
+                    temp = list(response)
+                    temp[int(user[4])-1]='2'
+                    response = "".join(temp)
 
         return response
     else:
