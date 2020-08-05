@@ -86,8 +86,11 @@ def login():
     with conn:
         user = db.query_user(conn, user_name)
 
-    if user[2]==password_hashed:
-        return 'ok'
+    if user!=0:
+        if user[2]==password_hashed:
+            return 'ok'
+        else:
+            abort(403)
     else:
         abort(403)
 
