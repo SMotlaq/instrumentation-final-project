@@ -69,7 +69,9 @@ def get_status2():
             parkings = db.query_all_parkings(conn)
             if parkings!=0:
                 for parking in parkings:
-                    response = response + parking[1]
+                    temp = list(response)
+                    temp[int(parking[0])-1]='1'
+                    response = "".join(temp)
 
         return response
     else:
