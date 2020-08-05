@@ -63,6 +63,12 @@ def get_status2():
             if parkings!=0:
                 for parking in parkings:
                     response = response + parking[1]
+
+            users = db.query_all_user(conn)
+            for user in users:
+                if user[4]!='0':
+                    response[int(user[4])-1]='2'
+
         return response
     else:
         return 'wrong password'
