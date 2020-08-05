@@ -1,4 +1,4 @@
-from flask import Flask, request, abort
+from flask import Flask, request, abort, send_from_directory
 from flask_cors import CORS, cross_origin
 import DataBase as db
 import datetime
@@ -11,9 +11,19 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 #database     = r'D:\ac\Instrumentation\Final Ptoject\Backend\Main.db'
 database     = r'C:\Users\Administrator\Desktop\instrumentation-final-project\Backend\Main.db'
+index        = r'C:\Users\Administrator\Desktop\instrumentation-final-project\Backend\build\index.html'
 conn         = db.create_connection(database)
 mainPassword = passwords.mainPassword
 db.create_table(conn)
+
+#----------------------------- REACT requests -----------------------------#
+@app.route('/')
+@app.route('/login')
+@app.route('/signup')
+@app.route('/reserve')
+def react():
+    return send_from_directory(index)
+
 
 #------------------------------ ESP requests ------------------------------#
 @app.route('/test', methods = ['GET'])
