@@ -96,6 +96,7 @@ def parking_action():
     action   = request.args.get('action')
     value    = request.args.get('value')
     user     = request.args.get('user')
+    print(password + '\n' + address + '\n' + action + '\n' + value + '\n' + user)
     if password==mainPassword:
         try:
             if action=='reserve':
