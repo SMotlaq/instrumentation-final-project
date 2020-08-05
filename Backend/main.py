@@ -56,7 +56,7 @@ def set_status():
 @app.route('/get_status2', methods = ['GET'])
 def get_status2():
     password = request.args.get('password')
-    response = ''
+    response = '00'
     if password==mainPassword:
         with conn:
             users = db.query_all_users(conn)
