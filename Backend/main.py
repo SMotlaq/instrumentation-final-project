@@ -135,6 +135,7 @@ def parking_action():
                             return 'ok'
                         else:
                             abort(403)
+                            return 403
             elif action=='control':
                 if value=='1':
                     with conn:
