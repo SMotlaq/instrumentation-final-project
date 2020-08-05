@@ -18,8 +18,7 @@ db.create_table(conn)
 #------------------------------ ESP requests ------------------------------#
 @app.route('/test', methods = ['GET'])
 def test():
-    abort(403)
-    return 'salam'
+    return 'ok'
 
 @app.route('/get_status')
 def get_status():
@@ -92,7 +91,6 @@ def login():
     else:
         abort(403)
 
-
 @app.route('/addUser', methods = ['POST'])
 #user_name, password_hashed, name
 def addUser():
@@ -122,7 +120,6 @@ def parking_action():
     action   = request.args.get('action')
     value    = request.args.get('value')
     user     = request.args.get('user')
-    print(password + '\n' + address + '\n' + action + '\n' + value + '\n' + user)
     if password==mainPassword:
         try:
             if action=='reserve':
@@ -131,7 +128,11 @@ def parking_action():
                         db.update_user(conn, user, parking_number = address)
                 elif value=='0':
                     with conn:
-                        db.update_user(conn, user, parking_number = '0')
+                        user = db.query_user(conn, user)
+                        if user[4]==address:
+                            db.update_user(conn, user, parking_number = '0')
+                        else:
+                            abort(403)
             elif action=='control':
                 if value=='1':
                     with conn:
