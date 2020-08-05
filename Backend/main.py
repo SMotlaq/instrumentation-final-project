@@ -64,7 +64,7 @@ def get_status2():
                 for parking in parkings:
                     response = response + parking[1]
 
-            users = db.query_all_user(conn)
+            users = db.query_all_users(conn)
             for user in users:
                 if user[4]!='0':
                     response[int(user[4])-1]='2'
