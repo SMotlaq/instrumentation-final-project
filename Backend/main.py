@@ -11,7 +11,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 #database     = r'D:\ac\Instrumentation\Final Ptoject\Backend\Main.db'
 database     = r'C:\Users\Administrator\Desktop\instrumentation-final-project\Backend\Main.db'
-index        = r'C:\Users\Administrator\Desktop\instrumentation-final-project\Backend\build\index.html'
+index        = r'C:\Users\Administrator\Desktop\instrumentation-final-project\Backend\build'
 conn         = db.create_connection(database)
 mainPassword = passwords.mainPassword
 db.create_table(conn)
@@ -22,7 +22,7 @@ db.create_table(conn)
 @app.route('/signup')
 @app.route('/reserve')
 def react():
-    return send_from_directory(index)
+    return send_from_directory(index, 'index.html')
 
 
 #------------------------------ ESP requests ------------------------------#
