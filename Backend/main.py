@@ -18,14 +18,15 @@ mainPassword = passwords.mainPassword
 db.create_table(conn)
 
 #----------------------------- REACT requests -----------------------------#
-@app.route('/front', defaults={'path': ''})
-@app.route('/front/<path:path>')
-def react():
-     path_dir = index #path react build
-     if path != "" and os.path.exists(os.path.join(path_dir, path)):
-         return send_from_directory(os.path.join(path_dir), path)
-     else:
-         return send_from_directory(os.path.join(path_dir),'index.html')
+@app.route('/', defaults={'path': ''})
+def react(path):
+     path_dir = index #path react build\
+     return send_from_directory(os.path.join(path_dir),'index.html')
+
+@app.route('/static/<type>/<path>')
+def static_js_react(type, path):
+     path_dir = index #path react build\
+     return send_from_directory(os.path.join(path_dir, "static",type), path)
 
 #------------------------------ ESP requests ------------------------------#
 @app.route('/test', methods = ['GET'])
@@ -185,6 +186,7 @@ def getTime():
     date = requests.get("http://gahshomar-api.herokuapp.com/date/jalali"     ).text.replace(' ','')
     time, date = cleaner(time, date)
     return time, date
+
 
 if __name__ == '__main__':
     #app.run()
