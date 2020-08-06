@@ -12,12 +12,12 @@ def create_table(conn):
     if conn is not None:
         sql = """ CREATE TABLE IF NOT EXISTS users (
                     id integer PRIMARY KEY AUTOINCREMENT,
-                    user_name text,
-                    password_hashed text,
-                    name text,
-                    parking_number text,
-                    isClosed text,
-                    credit text
+                    user_name TEXT,
+                    password_hashed TEXT,
+                    name TEXT,
+                    parking_number TEXT,
+                    isClosed TEXT,
+                    credit TEXT
                   ); """
         try:
             c = conn.cursor()
@@ -26,7 +26,7 @@ def create_table(conn):
             print(e)
         sql = """ CREATE TABLE IF NOT EXISTS parkings (
                     id integer PRIMARY KEY AUTOINCREMENT,
-                    isFull text
+                    isFull TEXT
                   ); """
         try:
             c = conn.cursor()
@@ -97,7 +97,7 @@ def update_user(conn, user_name, password_hashed=None, name=None, parking_number
     if parking_number is not None:
         try:
             cur = conn.cursor()
-            cur.execute('UPDATE users SET parking_number=? WHERE user_name=?', (str(parking_number), user_name,))
+            cur.execute('UPDATE users SET parking_number=? WHERE user_name=?', (parking_number, user_name,))
             conn.commit()
         except Error as e:
             print('gaaaaaaaaaaav')
