@@ -100,6 +100,7 @@ def update_user(conn, user_name, password_hashed=None, name=None, parking_number
             cur.execute('UPDATE users SET parking_number=? WHERE user_name=?', (parking_number, user_name,))
             conn.commit()
         except Error as e:
+            print('gaaaaaaaaaaav')
             print(e)
     if isClosed is not None:
         try:
