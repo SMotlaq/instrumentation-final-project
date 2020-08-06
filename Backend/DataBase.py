@@ -97,7 +97,7 @@ def update_user(conn, user_name, password_hashed=None, name=None, parking_number
     if parking_number is not None:
         try:
             cur = conn.cursor()
-            cur.execute('UPDATE users SET parking_number=? WHERE user_name=?', (parking_number, user_name,))
+            cur.execute('UPDATE users SET parking_number=? WHERE user_name=?', (str(parking_number), user_name,))
             conn.commit()
         except Error as e:
             print('gaaaaaaaaaaav')
