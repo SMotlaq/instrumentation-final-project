@@ -150,7 +150,7 @@ def parking_action():
                     user_ = db.query_user(conn, user)
                     print(user_)
                     if user_[4]==address:
-                        db.update_user(conn, user, parking_number = value)
+                        db.update_user(conn, user, parking_number = value, isClosed='0')
                         return 'ok'
                     else:
                         abort(403)
@@ -165,7 +165,6 @@ def parking_action():
                     return 'ok'
     else:
         return 'wrong password'
-
 
 def cleaner(time, date):
     time_elements = time.split(':')
@@ -190,7 +189,6 @@ def getTime():
     date = requests.get("http://gahshomar-api.herokuapp.com/date/jalali"     ).text.replace(' ','')
     time, date = cleaner(time, date)
     return time, date
-
 
 if __name__ == '__main__':
     #app.run()
