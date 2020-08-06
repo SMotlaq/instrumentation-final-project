@@ -147,10 +147,10 @@ def parking_action():
                     return 'ok'
             elif value=='0':
                 with conn:
-                    user = db.query_user(conn, user)
-                    print(user)
-                    if user[4]==address:
-                        db.update_user(conn, user, parking_number = "0")
+                    user_ = db.query_user(conn, user)
+                    print(user_)
+                    if user_[4]==address:
+                        db.update_user(conn, user, parking_number = value)
                         return 'ok'
                     else:
                         abort(403)
