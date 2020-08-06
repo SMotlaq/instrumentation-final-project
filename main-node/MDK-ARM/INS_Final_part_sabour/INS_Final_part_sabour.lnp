@@ -1,0 +1,22 @@
+--cpu Cortex-M3
+"ins_final_part_sabour\startup_stm32f103xb.o"
+"ins_final_part_sabour\main.o"
+"ins_final_part_sabour\stm32f1xx_it.o"
+"ins_final_part_sabour\stm32f1xx_hal_msp.o"
+"ins_final_part_sabour\stm32f1xx_hal_gpio_ex.o"
+"ins_final_part_sabour\stm32f1xx_hal_tim.o"
+"ins_final_part_sabour\stm32f1xx_hal_tim_ex.o"
+"ins_final_part_sabour\stm32f1xx_hal.o"
+"ins_final_part_sabour\stm32f1xx_hal_rcc.o"
+"ins_final_part_sabour\stm32f1xx_hal_rcc_ex.o"
+"ins_final_part_sabour\stm32f1xx_hal_gpio.o"
+"ins_final_part_sabour\stm32f1xx_hal_dma.o"
+"ins_final_part_sabour\stm32f1xx_hal_cortex.o"
+"ins_final_part_sabour\stm32f1xx_hal_pwr.o"
+"ins_final_part_sabour\stm32f1xx_hal_flash.o"
+"ins_final_part_sabour\stm32f1xx_hal_flash_ex.o"
+"ins_final_part_sabour\system_stm32f1xx.o"
+--library_type=microlib --strict --scatter "INS_Final_part_sabour\INS_Final_part_sabour.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "INS_Final_part_sabour.map" -o INS_Final_part_sabour\INS_Final_part_sabour.axf
