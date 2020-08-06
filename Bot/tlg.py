@@ -207,8 +207,6 @@ def reserve_parking(inCome_uid, parking_number):
     except Exception as e:
         print(e)
         return 0
-
-
 def open_door(inCome_uid):
     with conn:
         user = db.query_user(conn, inCome_uid)
@@ -239,27 +237,35 @@ def set_password(inCome_uid, input_message):
         return 0
 def user_name_isFree(input_message):
     return 1
-
 def password_isMatch(inCome_uid, input_message):
     try:
         with conn:
             user = db.query_user(conn, inCome_uid)
         if user!=0:
-            if user[5]==input_message:
+            url = "http://176.9.199.181:5000/login?password={}&user_name={}&password_hashed={}".format('dorosteaghaye', user[5], input_message)
+            response = requests.post(url)
+            if response.status_code == 200:
+                db.update_user(conn, inCome_uid, p_password=input_message)
                 return 1
+            elif response.status_code == 403:
+                send_text(int(inCome_uid),ms.match_error)
+                return 0
         return 0
     except Exception as e:
         print(e)
 def user_name_isValid(inCome_uid, input_message):
     try:
         with conn:
-            user = db.query_user(conn, inCome_uid)
-        if user!=0:
-            if user[4]==input_message:
-                return 1
-        return 0
+        #    user = db.query_user(conn, inCome_uid)
+        # if user!=0:
+        #     if user[4]==input_message:
+        #         return 1
+        # return 0
+            db.update_user(conn, inCome_uid, p_user_name=input_message)
+        return 1
     except Exception as e:
         print(e)
+        return 0
 def parking_available(inCome_uid):
     with conn:
         user = db.query_user(conn, inCome_uid)
@@ -267,8 +273,6 @@ def parking_available(inCome_uid):
             return 1
         else:
             return 0
-
-
 
 def exctract_info(chat_id):
     inCome_uid = str(chat_id['id'])
@@ -301,7 +305,6 @@ def send_text(uid, msg, keyboard=None):
             bot.send_message(chat_id=uid, text=msg, reply_markup=reply_markup)
     except Exception as e:
         print(e)
-
 def keyboard_handler(keyboard_buttons):
     return telegram.ReplyKeyboardMarkup(keyboard_buttons,resize_keyboard=True)
 def handler(signum, frame):
