@@ -43,6 +43,8 @@ def get_status():
         for user in users:
             if user[4]!='0':
                 response = response + user[5]
+            else:
+                response = response + '0'
         return response
     else:
         return 'wrong password'
