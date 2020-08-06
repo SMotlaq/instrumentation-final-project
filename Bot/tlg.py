@@ -242,7 +242,7 @@ def password_isMatch(inCome_uid, input_message):
         with conn:
             user = db.query_user(conn, inCome_uid)
         if user!=0:
-            url = "http://176.9.199.181:5000/login?password={}&user_name={}&password_hashed={}".format('dorosteaghaye', user[5], input_message)
+            url = "http://176.9.199.181:5000/login?password={}&user_name={}&password_hashed={}".format('dorosteaghaye', user[4], input_message)
             response = requests.post(url)
             if response.status_code == 200:
                 db.update_user(conn, inCome_uid, p_password=input_message)
