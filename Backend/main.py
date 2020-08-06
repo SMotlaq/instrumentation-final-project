@@ -48,8 +48,6 @@ def get_status():
         return 'wrong password'
 
 @app.route('/set_status')
-#state
-#10100001
 def set_status():
     password = request.args.get('password')
     state    = request.args.get('state')

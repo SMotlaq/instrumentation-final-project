@@ -80,36 +80,35 @@ def query_all_parkings(conn):
         print(e)
         return 0
 def update_user(conn, user_name, password_hashed=None, name=None, parking_number=None, isClosed=None,  credit=None):
-    if password_hashed is not None:
+    if password_hashed!=None:
         try:
             cur = conn.cursor()
             cur.execute('UPDATE users SET password_hashed=? WHERE user_name=?', (password_hashed, user_name,))
             conn.commit()
         except Error as e:
             print(e)
-    if name is not None:
+    if name!=None:
         try:
             cur = conn.cursor()
             cur.execute('UPDATE users SET name=? WHERE user_name=?', (name, user_name,))
             conn.commit()
         except Error as e:
             print(e)
-    if parking_number is not None:
+    if parking_number!=None:
         try:
             cur = conn.cursor()
             cur.execute('UPDATE users SET parking_number=? WHERE user_name=?', (parking_number, user_name,))
             conn.commit()
         except Error as e:
-            print('gaaaaaaaaaaav')
             print(e)
-    if isClosed is not None:
+    if isClosed!=None:
         try:
             cur = conn.cursor()
             cur.execute('UPDATE users SET isClosed=? WHERE user_name=?', (isClosed, user_name,))
             conn.commit()
         except Error as e:
             print(e)
-    if credit is not None:
+    if credit!=None:
         try:
             cur = conn.cursor()
             cur.execute('UPDATE users SET credit=? WHERE user_name=?', (credit, user_name,))
