@@ -41,8 +41,8 @@ def get_status():
         with conn:
             users = db.query_all_users(conn)
         for user in users:
-            if user[5]=='1':
-                response = response + user[4]
+            if user[4]!='0':
+                response = response + user[5]
         return response
     else:
         return 'wrong password'
