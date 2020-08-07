@@ -1,1 +1,0 @@
-my_token = '1395796146:AAH5XRIL6yx73r7ds7B1cSzuLqu-eYMYy3s'
