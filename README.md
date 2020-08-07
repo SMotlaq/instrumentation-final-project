@@ -7,4 +7,4 @@
 * STM32F103C8 ARM processor
 * Ultrasonic sensors (SRF05)
 ## Topology
-![topology](Drawing1.jpg)
+![topology](Drawing.jpg)
