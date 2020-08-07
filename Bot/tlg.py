@@ -256,11 +256,6 @@ def password_isMatch(inCome_uid, input_message):
 def user_name_isValid(inCome_uid, input_message):
     try:
         with conn:
-        #    user = db.query_user(conn, inCome_uid)
-        # if user!=0:
-        #     if user[4]==input_message:
-        #         return 1
-        # return 0
             db.update_user(conn, inCome_uid, p_user_name=input_message)
         return 1
     except Exception as e:
