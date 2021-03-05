@@ -1,4 +1,5 @@
-# Smart Parking
+# Smart Parking 
+A simple prototype of a smart parking for instrumentaion course final project
 ## Test
 **To watch video click [here](https://youtu.be/2oAV86ZQGnY)**
 ## Hardware
