@@ -8,5 +8,6 @@ A simple prototype of a smart parking for instrumentaion course final project
 * Arduino nano
 * STM32F103C8 ARM processor
 * Ultrasonic sensors (SRF05)
+
 ## Topology
 ![topology](Drawing.jpg)
